@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDTC Portfolio - Electronics Design and Testing Centre</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            height: 297mm;
+            background: linear-gradient(135deg, #0a4d68 0%, #088395 50%, #05bfdb 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            page-break-after: always;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 35px,
+                rgba(255, 255, 255, 0.03) 35px,
+                rgba(255, 255, 255, 0.03) 70px
+            );
+        }
+
+        .logo-placeholder {
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        .logo-text {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 8px;
+        }
+
+        .cover-title {
+            font-size: 56px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 2px;
+            z-index: 1;
+        }
+
+        .cover-subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            text-align: center;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .cover-tagline {
+            font-size: 18px;
+            font-weight: 400;
+            text-align: center;
+            max-width: 600px;
+            opacity: 0.85;
+            line-height: 1.8;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 40px;
+            font-size: 14px;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Content Pages */
+        .content-page {
+            min-height: 297mm;
+            padding: 60px 70px 80px 70px;
+            page-break-after: always;
+            position: relative;
+            background: white;
+        }
+
+        .content-page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Header */
+        .page-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: linear-gradient(90deg, #0a4d68 0%, #088395 50%, #05bfdb 100%);
+        }
+
+        /* Footer */
+        .page-footer {
+            position: absolute;
+            bottom: 30px;
+            left: 70px;
+            right: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #777;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-left {
+            font-weight: 600;
+            color: #088395;
+        }
+
+        .footer-right {
+            color: #999;
+        }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0a4d68;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #088395;
+            display: inline-block;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 35px;
+            font-style: italic;
+        }
+
+        .content-block {
+            margin-bottom: 30px;
+        }
+
+        .content-block h3 {
+            font-size: 22px;
+            color: #088395;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .content-block p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Image Placeholders */
+        .image-placeholder {
+            background: linear-gradient(135deg, #e3f4f4 0%, #d4edee 100%);
+            border: 2px dashed #088395;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #088395;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 25px 0;
+        }
+
+        .image-placeholder-large {
+            height: 280px;
+        }
+
+        .image-placeholder-medium {
+            height: 200px;
+        }
+
+        .image-placeholder-small {
+            height: 150px;
+        }
+
+        /* Grid Layouts */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card h4 {
+            font-size: 18px;
+            color: #0a4d68;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #088395 0%, #05bfdb 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .feature-list li {
+            padding: 12px 0 12px 35px;
+            position: relative;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 10px;
+            color: #088395;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            background: linear-gradient(135deg, #0a4d68 0%, #088395 100%);
+            color: white;
+            padding: 35px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            margin-right: 10px;
+            min-width: 100px;
+        }
+
+        /* Highlights */
+        .highlight-box {
+            background: linear-gradient(135deg, #e8f8f9 0%, #d4f1f4 100%);
+            border-left: 5px solid #088395;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #0a4d68;
+            font-weight: 500;
+        }
+
+        /* Stats */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #088395;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- COVER PAGE -->
+    <div class="cover-page">
+        <div class="logo-placeholder">
+            <div class="logo-text">EDTC</div>
+        </div>
+        <h1 class="cover-title">Electronics Design<br/>and Testing Centre</h1>
+        <p class="cover-subtitle">Innovation Through Precision</p>
+        <p class="cover-tagline">
+            Leading the future of electronics design, testing, and innovation<br/>
+            with cutting-edge solutions and unparalleled expertise
+        </p>
+        <div class="cover-footer">www.edtc.tech</div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div class="content-page">
+        <div class="page-header"></div>
+
+        <h2 class="section-title">About EDTC</h2>
+        <p class="section-subtitle">Who We Are and What We Stand For</p>
+
+        <div class="content-block">
+            <p>
+                The Electronics Design and Testing Centre (EDTC) is a premier organization dedicated to advancing
+                the field of electronics through innovative design solutions, comprehensive testing services, and
+                cutting-edge research. With a commitment to excellence and precision, we serve as a trusted partner
+                for businesses and institutions seeking to push the boundaries of electronic technology.
+            </p>
+            <p>
+                Our state-of-the-art facilities house advanced equipment and testing laboratories, enabling us to
+                deliver world-class services across the entire electronics development lifecycle. From concept to
+                production, we provide the expertise and resources needed to transform ideas into reality.
+            </p>
+        </div>
+
+        <div class="image-placeholder image-placeholder-large">
+            [EDTC Facility Image - Modern Electronics Lab]
+        </div>
+
+        <div class="highlight-box">
+            <p>
+                <strong>Our Mission:</strong> To empower innovation in electronics through exceptional design,
+                rigorous testing, and collaborative partnerships that drive technological advancement and
+                industrial excellence.
+            </p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Expert Engineers</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3>Our Core Values</h3>
+            <ul class="feature-list">
+                <li><strong>Innovation:</strong> Constantly pushing boundaries and exploring new possibilities in electronics</li>
+                <li><strong>Precision:</strong> Maintaining the highest standards of accuracy in design and testing</li>
+                <li><strong>Collaboration:</strong> Working closely with clients to understand and exceed their expectations</li>
+                <li><strong>Excellence:</strong> Delivering superior quality in every project we undertake</li>
+                <li><strong>Integrity:</strong> Operating with transparency and ethical practices in all our engagements</li>
+            </ul>
+        </div>
+
+        <div class="page-footer">
+            <div class="footer-left">EDTC - Electronics Design and Testing Centre</div>
+            <div class="footer-right">Page 1</div>
+        </div>
+    </div>
+
+    <!-- KEY INITIATIVES PAGE -->
+    <div class="content-page">
+        <div class="page-header"></div>
+
+        <h2 class="section-title">Key Initiatives</h2>
+        <p class="section-subtitle">Driving Innovation and Excellence</p>
+
+        <div class="content-block">
+            <p>
+                At EDTC, we continuously invest in strategic initiatives that strengthen our capabilities,
+                expand our service offerings, and contribute to the advancement of the electronics industry.
+                Our key initiatives reflect our commitment to staying at the forefront of technology and
+                meeting the evolving needs of our clients.
+            </p>
+        </div>
+
+        <div class="three-column">
+            <div class="card">
+                <div class="card-icon">R&D</div>
+                <h4>Research & Development</h4>
+                <p>
+                    Continuous investment in cutting-edge research to develop innovative solutions
+                    and methodologies for electronics design and testing.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card-icon">IoT</div>
+                <h4>IoT Integration</h4>
+                <p>
+                    Developing comprehensive IoT solutions and testing frameworks for connected
+                    devices and smart systems.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card-icon">AI</div>
+                <h4>AI-Driven Testing</h4>
+                <p>
+                    Implementing artificial intelligence and machine learning for automated testing
+                    and predictive analysis.
+                </p>
+            </div>
+        </div>
+
+        <div class="image-placeholder image-placeholder-medium">
+            [Innovation Lab Image - Engineers Working on Electronics]
+        </div>
+
+        <div class="content-block">
+            <h3>Sustainability Initiative</h3>
+            <p>
+                We are committed to environmental responsibility through our green electronics initiative.
+                This program focuses on developing energy-efficient designs, promoting sustainable
+                manufacturing practices, and ensuring proper e-waste management. Our sustainability efforts
+                extend across all aspects of our operations, from design principles to testing procedures.
+            </p>
+        </div>
+
+        <div class="two-column">
+            <div class="content-block">
+                <h3>Skills Development</h3>
+                <p>
+                    Our training and certification programs help professionals stay current with the
+                    latest technologies and methodologies in electronics design and testing. We offer
+                    workshops, seminars, and hands-on training sessions.
+                </p>
+            </div>
+            <div class="content-block">
+                <h3>Industry Collaboration</h3>
+                <p>
+                    We actively partner with leading technology companies, academic institutions, and
+                    research organizations to drive innovation and establish industry best practices.
+                </p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p>
+                <strong>Looking Ahead:</strong> Our roadmap includes expanding into emerging technologies
+                such as quantum computing interfaces, advanced 5G/6G testing, and next-generation
+                semiconductor validation.
+            </p>
+        </div>
+
+        <div class="page-footer">
+            <div class="footer-left">EDTC - Electronics Design and Testing Centre</div>
+            <div class="footer-right">Page 2</div>
+        </div>
+    </div>
+
+    <!-- PRODUCTS PAGE -->
+    <div class="content-page">
+        <div class="page-header"></div>
+
+        <h2 class="section-title">Products</h2>
+        <p class="section-subtitle">Innovative Solutions for Modern Electronics</p>
+
+        <div class="content-block">
+            <p>
+                EDTC develops and delivers specialized products designed to address the complex challenges
+                of modern electronics design and testing. Our product portfolio combines advanced technology
+                with practical functionality to provide effective solutions for diverse applications.
+            </p>
+        </div>
+
+        <div class="two-column">
+            <div class="card">
+                <div class="card-icon">PCB</div>
+                <h4>Custom PCB Design Solutions</h4>
+                <p>
+                    Comprehensive PCB design services from concept to production, including multi-layer
+                    boards, high-frequency designs, and specialized applications. Our solutions incorporate
+                    signal integrity analysis, thermal management, and EMC compliance.
+                </p>
+                <ul class="feature-list">
+                    <li>High-speed digital design</li>
+                    <li>RF and microwave circuits</li>
+                    <li>Power electronics layouts</li>
+                    <li>Flex and rigid-flex designs</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">TEST</div>
+                <h4>Automated Testing Systems</h4>
+                <p>
+                    State-of-the-art automated test equipment (ATE) and custom test fixtures designed
+                    to streamline your quality assurance processes. Our systems provide comprehensive
+                    coverage with reduced testing time.
+                </p>
+                <ul class="feature-list">
+                    <li>Functional testing platforms</li>
+                    <li>Boundary scan solutions</li>
+                    <li>In-circuit testing systems</li>
+                    <li>Custom test fixtures</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="image-placeholder image-placeholder-large">
+            [Product Showcase Image - Testing Equipment and PCB Designs]
+        </div>
+
+        <div class="two-column">
+            <div class="card">
+                <div class="card-icon">EMI</div>
+                <h4>EMC Testing Equipment</h4>
+                <p>
+                    Professional-grade electromagnetic compatibility testing solutions for compliance
+                    and pre-compliance testing. Ensure your products meet international standards.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card-icon">SIM</div>
+                <h4>Design Simulation Tools</h4>
+                <p>
+                    Advanced simulation software packages for circuit analysis, thermal modeling,
+                    and electromagnetic simulation to optimize designs before prototyping.
+                </p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p>
+                All our products are backed by comprehensive technical support, regular updates,
+                and training programs to ensure maximum value and efficiency for our clients.
+            </p>
+        </div>
+
+        <div class="page-footer">
+            <div class="footer-left">EDTC - Electronics Design and Testing Centre</div>
+            <div class="footer-right">Page 3</div>
+        </div>
+    </div>
+
+    <!-- SERVICES PAGE -->
+    <div class="content-page">
+        <div class="page-header"></div>
+
+        <h2 class="section-title">Services</h2>
+        <p class="section-subtitle">Comprehensive Support Across the Electronics Lifecycle</p>
+
+        <div class="content-block">
+            <p>
+                Our extensive service portfolio covers every stage of electronics development, from initial
+                concept through production and beyond. We combine technical expertise with state-of-the-art
+                facilities to deliver reliable, efficient, and cost-effective solutions.
+            </p>
+        </div>
+
+        <div class="three-column">
+            <div class="card">
+                <div class="card-icon">1</div>
+                <h4>Design Services</h4>
+                <p>Complete electronics design from schematic to layout, including component selection and design optimization.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">2</div>
+                <h4>Prototyping</h4>
+                <p>Rapid prototyping services to validate designs quickly and iterate efficiently before production.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">3</div>
+                <h4>Testing & Validation</h4>
+                <p>Comprehensive testing services including functional, environmental, and compliance testing.</p>
+            </div>
+        </div>
+
+        <div class="image-placeholder image-placeholder-medium">
+            [Services in Action Image - Testing Laboratory]
+        </div>
+
+        <div class="content-block">
+            <h3>Specialized Testing Services</h3>
+            <ul class="feature-list">
+                <li><strong>Environmental Testing:</strong> Temperature, humidity, vibration, and shock testing</li>
+                <li><strong>EMC/EMI Testing:</strong> Conducted and radiated emissions and immunity testing</li>
+                <li><strong>Safety Testing:</strong> Electrical safety and compliance certification support</li>
+                <li><strong>Reliability Testing:</strong> Accelerated life testing and failure analysis</li>
+                <li><strong>Signal Integrity:</strong> High-speed digital signal analysis and characterization</li>
+                <li><strong>Power Testing:</strong> Efficiency, transient response, and load regulation testing</li>
+            </ul>
+        </div>
+
+        <div class="two-column">
+            <div class="content-block">
+                <h3>Consulting Services</h3>
+                <p>
+                    Our experienced engineers provide expert consulting on design optimization,
+                    technology selection, compliance requirements, and best practices. We help
+                    clients navigate complex technical challenges and make informed decisions.
+                </p>
+            </div>
+            <div class="content-block">
+                <h3>Support & Maintenance</h3>
+                <p>
+                    Ongoing technical support, troubleshooting, and maintenance services to ensure
+                    your products and systems continue to perform optimally throughout their lifecycle.
+                </p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p>
+                <strong>Custom Solutions:</strong> Don't see what you need? We specialize in developing
+                custom solutions tailored to unique requirements. Contact us to discuss your specific needs.
+            </p>
+        </div>
+
+        <div class="page-footer">
+            <div class="footer-left">EDTC - Electronics Design and Testing Centre</div>
+            <div class="footer-right">Page 4</div>
+        </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div class="content-page">
+        <div class="page-header"></div>
+
+        <h2 class="section-title">Contact Us</h2>
+        <p class="section-subtitle">Let's Start a Conversation</p>
+
+        <div class="content-block">
+            <p>
+                We're here to help you succeed. Whether you have a question about our services, need technical
+                support, or want to discuss a potential project, our team is ready to assist you. Reach out to
+                us through any of the channels below, and we'll respond promptly.
+            </p>
+        </div>
+
+        <div class="two-column">
+            <div>
+                <div class="image-placeholder image-placeholder-medium">
+                    [Office Location Image / Map]
+                </div>
+
+                <div class="content-block">
+                    <h3>Why Choose EDTC?</h3>
+                    <ul class="feature-list">
+                        <li>Proven track record of successful projects</li>
+                        <li>State-of-the-art testing facilities</li>
+                        <li>Experienced team of engineers</li>
+                        <li>Competitive pricing and flexible terms</li>
+                        <li>Commitment to quality and innovation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+
+                    <div class="contact-item">
+                        <span class="contact-label">Website:</span>
+                        <span>www.edtc.tech</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span>info@edtc.tech</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-label">Phone:</span>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-label">Address:</span>
+                        <span>123 Innovation Drive<br/>Technology Park<br/>Silicon Valley, CA 94025</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-label">Hours:</span>
+                        <span>Monday - Friday: 8:00 AM - 6:00 PM<br/>Saturday: 9:00 AM - 2:00 PM</span>
+                    </div>
+                </div>
+
+                <div class="content-block" style="margin-top: 25px;">
+                    <h3>Request a Quote</h3>
+                    <p>
+                        For project inquiries and quotations, please visit our website or send us a
+                        detailed description of your requirements to quotes@edtc.tech. We typically
+                        respond within 24-48 hours.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top: 40px;">
+            <p style="text-align: center; font-size: 18px;">
+                <strong>Ready to bring your electronics project to life?</strong><br/>
+                Contact EDTC today and let's turn your vision into reality.
+            </p>
+        </div>
+
+        <div class="page-footer">
+            <div class="footer-left">EDTC - Electronics Design and Testing Centre</div>
+            <div class="footer-right">Page 5</div>
+        </div>
+    </div>
+</body>
+</html>
